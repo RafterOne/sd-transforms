@@ -51,6 +51,7 @@ export function expandToken(token: Expandables, isShadow = false): SingleToken<f
 
   const expandedObj = {} as SingleToken<false>;
   const getType = (key: string) => typeMaps[tokenType][key] ?? key;
+  const tokenIsSource = token.$isSource ?? token.isSource;
 
   // multi-shadow
   if (isShadow && Array.isArray(value)) {
@@ -68,6 +69,7 @@ export function expandToken(token: Expandables, isShadow = false): SingleToken<f
       expandedObj[key] = {
         [`${uses$ ? '$' : ''}value`]: `${value}`,
         [`${uses$ ? '$' : ''}type`]: getType(key),
+        [`${uses$ ? '$' : ''}isSource`]: tokenIsSource,
       };
     });
   }
